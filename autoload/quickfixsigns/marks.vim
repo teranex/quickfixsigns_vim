@@ -47,12 +47,15 @@ endif
 
 
 for s:i in g:quickfixsigns#marks#marks
+if !exists('g:quickfixsigns#marks#texthl')
+    " Highlight group for mark signs.
+    let g:quickfixsigns#marks#texthl = 'Identifier'   "{{{2
+endif
+
+
+for s:i in (g:quickfixsigns#marks#buffer + g:quickfixsigns#marks#global)
 	if index(g:quickfixsigns_signs, 'QFS_Mark_'. s:i) == -1
-        let s:highlight = 'Identifier'
-        if exists('g:quickfixsigns#marks#highlight')
-            let s:highlight = g:quickfixsigns#marks#highlight
-        endif
-		exec 'sign define QFS_Mark_'. s:i .' text='. s:i .' texthl='.s:highlight
+		exec 'sign define QFS_Mark_'. s:i .' text='. s:i .' texthl='. g:quickfixsigns#marks#texthl
 	endif
 endfor
 unlet s:i
